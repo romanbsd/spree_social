@@ -1,4 +1,4 @@
-lib = File.expand_path('../lib/', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
 
 require 'spree_social/version'
@@ -23,16 +23,12 @@ Gem::Specification.new do |s|
 
   spree_version =  '>= 3.1.0', '< 5.0'
   s.add_dependency 'spree_core', spree_version
+  s.add_runtime_dependency 'deface', '~> 1.0'
+  s.add_runtime_dependency 'omniauth-facebook'
+  s.add_runtime_dependency 'omniauth-google-oauth2'
+  s.add_runtime_dependency 'omniauth-twitter'
   s.add_runtime_dependency 'spree_auth_devise', '>= 3.1.0', '< 5.0'
   s.add_runtime_dependency 'spree_extension'
-  s.add_runtime_dependency 'omniauth'
-  s.add_runtime_dependency 'oa-core'
-  s.add_runtime_dependency 'omniauth-twitter'
-  s.add_runtime_dependency 'omniauth-facebook'
-  s.add_runtime_dependency 'omniauth-github'
-  s.add_runtime_dependency 'omniauth-google-oauth2'
-  s.add_runtime_dependency 'omniauth-amazon'
-  s.add_runtime_dependency 'deface', '~> 1.0'
 
   s.add_development_dependency 'spree_dev_tools'
 end

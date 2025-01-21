@@ -1,16 +1,17 @@
+require_relative '../../app/models/spree/authentication_method'
+require_relative '../../app/models/spree/social_configuration'
+
 module SpreeSocial
   OAUTH_PROVIDERS = [
-    %w(Facebook facebook true),
-    %w(Twitter twitter false),
-    %w(Github github false),
-    %w(Google google_oauth2 true),
-    %w(Amazon amazon false)
+    %w[Facebook facebook true],
+    %w[Twitter twitter false],
+    %w[Google google_oauth2 true]
   ]
 
   class Engine < Rails::Engine
     engine_name 'spree_social'
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W[#{config.root}/lib]
 
     # Resolves omniauth_callback error on development env
     # See https://github.com/spree-contrib/spree_social/issues/193#issuecomment-296585601
@@ -33,20 +34,26 @@ module SpreeSocial
     end
 
     config.to_prepare(&method(:activate).to_proc)
+
+    config.after_initialize do
+      LinksInjector.new.apply
+    end
   end
 
   # Setup all OAuth providers
   def self.init_provider(provider)
     begin
       ActiveRecord::Base.connection_pool.with_connection(&:active?)
-    rescue
+    rescue StandardError
       return
     end
 
     return unless ActiveRecord::Base.connection.data_source_exists?('spree_authentication_methods')
+
     key, secret = nil
     Spree::AuthenticationMethod.where(environment: ::Rails.env).each do |auth_method|
       next unless auth_method.provider == provider
+
       key = auth_method.api_key
       secret = auth_method.api_secret
       Rails.logger.info("[Spree Social] Loading #{auth_method.provider.capitalize} as authentication source")
@@ -58,6 +65,17 @@ module SpreeSocial
     Devise.setup do |config|
       config.omniauth provider, key, secret, setup: true, info_fields: 'email, name'
     end
+  end
+end
+
+class LinksInjector
+  include Spree::Core::Engine.routes.url_helpers
+
+  def apply
+    settings = Rails.application.config.spree_backend.main_menu.items.find { |item| item.key == 'settings' }
+    settings.add(Spree::Admin::MainMenu::ItemBuilder.new('social_authentication_methods', admin_authentication_methods_path)
+          .with_match_path('/authentication_methods')
+          .build)
   end
 end
 
