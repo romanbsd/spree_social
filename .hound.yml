@@ -1,6 +1,9 @@
 ---
+AllCops:
+  NewCops: enable
+
 # Too picky.
-Metrics/LineLength:
+Layout/LineLength:
   Max: 140
 
 # This should truly be on for well documented gems.
@@ -8,7 +11,7 @@ Style/Documentation:
   Enabled: false
 
 # Neatly aligned code is too swell.
-Style/SpaceBeforeFirstArg:
+Layout/SpaceBeforeFirstArg:
   Enabled: false
 
 # Don't mess with RSpec DSL.

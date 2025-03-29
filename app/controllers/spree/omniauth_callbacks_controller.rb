@@ -3,9 +3,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Spree::Core::ControllerHelpers::Order
   include Spree::Core::ControllerHelpers::Auth
   include Spree::Core::ControllerHelpers::Store
-  if defined?(Spree::Core::ControllerHelpers::Currency)
-    include Spree::Core::ControllerHelpers::Currency
-  end
+  include Spree::Core::ControllerHelpers::Currency if defined?(Spree::Core::ControllerHelpers::Currency)
 
   def self.provides_callback_for(*providers)
     providers.each do |provider|
@@ -17,7 +15,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             return
           end
 
-          authentication = Spree::UserAuthentication.find_by_provider_and_uid(auth_hash['provider'], auth_hash['uid'])
+          authentication = Spree::UserAuthentication.find_by(provider: auth_hash['provider'], uid: auth_hash['uid'])
 
           if authentication.present? and authentication.try(:user).present?
             flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: auth_hash['provider'])
