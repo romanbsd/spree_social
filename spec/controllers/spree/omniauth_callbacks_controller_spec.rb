@@ -56,7 +56,7 @@ RSpec.describe Spree::OmniauthCallbacksController, type: :controller do
       context 'when existing user_authentication' do
         let(:user_authentication) { double('user_authentication', user: user) }
         before do
-          allow(Spree::UserAuthentication).to receive(:find_by_provider_and_uid).and_return(user_authentication)
+          allow(Spree::UserAuthentication).to receive(:find_by).and_return(user_authentication)
         end
 
         it 'does not need to create the user_authentication' do
@@ -77,7 +77,7 @@ RSpec.describe Spree::OmniauthCallbacksController, type: :controller do
 
       context 'when no existing user_authentication' do
         before do
-          allow(Spree::UserAuthentication).to receive(:find_by_provider_and_uid).and_return(nil)
+          allow(Spree::UserAuthentication).to receive(:find_by).and_return(nil)
         end
 
         it 'creates a new user_authentication' do
@@ -110,7 +110,7 @@ RSpec.describe Spree::OmniauthCallbacksController, type: :controller do
       context 'when existing user_authentication' do
         let(:user_authentication) { double('user_authentication', user: user) }
         before do
-          allow(Spree::UserAuthentication).to receive(:find_by_provider_and_uid).and_return(user_authentication)
+          allow(Spree::UserAuthentication).to receive(:find_by).and_return(user_authentication)
         end
 
         it 'does not need to create the user_authentication' do
@@ -132,8 +132,9 @@ RSpec.describe Spree::OmniauthCallbacksController, type: :controller do
       context 'when no existing user_authentication' do
         let(:user) { Spree::User.new }
         before do
-          allow(Spree::UserAuthentication).to receive(:find_by_provider_and_uid).and_return(nil)
-          allow(controller).to receive(:auth_hash).and_return('provider' => 'facebook', 'info' => { 'email' => 'spree@gmail.com' }, 'uid' => '123')
+          allow(Spree::UserAuthentication).to receive(:find_by).and_return(nil)
+          allow(controller).to receive(:auth_hash).and_return('provider' => 'facebook', 'info' => { 'email' => 'spree@gmail.com' },
+                                                              'uid' => '123')
         end
 
         context "email doesn't belongs to anyone" do

@@ -2,7 +2,7 @@ SpreeSocial::OAUTH_PROVIDERS.each do |provider|
   SpreeSocial.init_provider(provider[1])
 end
 
-OmniAuth.config.logger = Logger.new(STDOUT)
+OmniAuth.config.logger = Logger.new($stdout)
 OmniAuth.logger.progname = 'omniauth'
 
 OmniAuth.config.on_failure = proc do |env|

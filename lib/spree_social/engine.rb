@@ -6,7 +6,7 @@ module SpreeSocial
     %w[Facebook facebook true],
     %w[Twitter twitter false],
     %w[Google google_oauth2 true]
-  ]
+  ].freeze
 
   class Engine < Rails::Engine
     engine_name 'spree_social'
@@ -16,7 +16,7 @@ module SpreeSocial
     # Resolves omniauth_callback error on development env
     # See https://github.com/spree-contrib/spree_social/issues/193#issuecomment-296585601
     if Rails::VERSION::MAJOR >= 5
-      initializer 'main_app.auto_load' do |app|
+      initializer 'main_app.auto_load' do |_app|
         Rails.application.reloader.to_run(:before) do
           Rails.application.reloader.prepare!
         end
@@ -28,7 +28,7 @@ module SpreeSocial
     end
 
     def self.activate
-      Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
+      Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')).sort.each do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
     end
@@ -87,7 +87,7 @@ module OmniAuth
                             'x320|x240|j2me|sgh|portable|sprint|docomo|kddi|softbank|android|mmp|' \
                             'pdxgw|netfront|xiino|vodafone|portalmmm|sagem|mot-|sie-|ipod|up\\.b|' \
                             'webos|amoi|novarra|cdm|alcatel|pocket|ipad|iphone|mobileexplorer|' \
-                            'mobile'
+                            'mobile'.freeze
       def request_phase
         options[:scope] ||= 'email'
         options[:display] = mobile_request? ? 'touch' : 'page'

@@ -6,7 +6,8 @@ RSpec.feature 'signing in using Omniauth', :js do
         api_key: 'fake',
         api_secret: 'fake',
         environment: Rails.env,
-        active: true)
+        active: true
+      )
       OmniAuth.config.test_mode = true
       OmniAuth.config.mock_auth[:facebook] = {
         'provider' => 'facebook',
@@ -53,7 +54,8 @@ RSpec.feature 'signing in using Omniauth', :js do
         api_key: 'fake',
         api_secret: 'fake',
         environment: Rails.env,
-        active: true)
+        active: true
+      )
       OmniAuth.config.test_mode = true
       OmniAuth.config.mock_auth[:twitter] = {
         'provider' => 'twitter',

@@ -5,8 +5,8 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Spree::Core::ControllerHelpers::Store
   include Spree::Core::ControllerHelpers::Currency if defined?(Spree::Core::ControllerHelpers::Currency)
 
-  def self.provides_callback_for(*providers)
-    providers.each do |provider|
+  def self.provides_callback_for(*providers) # rubocop:disable Metrics/MethodLength
+    providers.each do |provider| # rubocop:disable Metrics/BlockLength
       class_eval <<-FUNCTION_DEFS, __FILE__, __LINE__ + 1
         def #{provider}
           if request.env['omniauth.error'].present?

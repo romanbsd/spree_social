@@ -43,7 +43,8 @@ RSpec.feature 'Admin Authentication Methods', :js do
         api_key: 'fake',
         api_secret: 'fake',
         environment: Rails.env,
-        active: true)
+        active: true
+      )
     end
 
     background do

@@ -20,4 +20,4 @@ module Spree
   end
 end
 
-::Spree.user_class.prepend(Spree::UserDecorator)
+Spree.user_class.prepend(Spree::UserDecorator)
