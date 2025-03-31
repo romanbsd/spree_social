@@ -30,5 +30,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'spree_extension'
 
   s.add_development_dependency 'spree_dev_tools'
+  s.add_development_dependency 'actionmailer'
+  s.add_development_dependency 'actionpack'
+  s.add_development_dependency 'sqlite3'
   s.metadata['rubygems_mfa_required'] = 'true'
 end
