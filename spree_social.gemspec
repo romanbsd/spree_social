@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = SpreeSocial.version
   s.summary     = 'Adds social network login services (OAuth) to Spree'
   s.description = s.summary
-  s.required_ruby_version = '>= 2.1.0'
+  s.required_ruby_version = '>= 3.2.0'
 
   s.author   = 'John Dyer'
   s.email    = 'jdyer@spreecommerce.com'
@@ -20,12 +20,12 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  spree_version =  '>= 3.1.0', '< 5.0'
+  spree_version =  '>= 3.1.0', '< 6.0'
   s.add_dependency 'deface', '~> 1.0'
   s.add_dependency 'omniauth-facebook'
   s.add_dependency 'omniauth-google-oauth2'
   s.add_dependency 'omniauth-twitter'
-  s.add_dependency 'spree_auth_devise', '>= 3.1.0', '< 5.0'
+  s.add_dependency 'spree_auth_devise', '>= 3.1.0', '< 6.0'
   s.add_dependency 'spree_core', spree_version
   s.add_dependency 'spree_extension'
 
